@@ -1,5 +1,6 @@
 import os
 import socket
+import sys
 from sys import platform
 from functools import wraps, partial
 from itertools import count, chain
@@ -1387,7 +1388,11 @@ class Context(object):
 
         @wraps(callback)
         def wrapper(ssl, alert, arg):
-            callback(Connection._reverse_mapping[ssl])
+            try:
+                callback(Connection._reverse_mapping[ssl])
+            except Exception:
+                sys.excepthook(*sys.exc_info())
+                return _lib.SSL_TLSEXT_ERR_ALERT_FATAL
             return 0
 
         self._tlsext_servername_callback = _ffi.callback(
