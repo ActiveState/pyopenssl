@@ -4,6 +4,21 @@ Changelog
 Versions are year-based with a strict backward-compatibility policy.
 The third digit is only for regressions.
 
+21.0.0.post1 (2026-11-12)
+-------------------------
+
+ActiveState security release for the Python 2.7 line (21.0.0 is the last
+pyOpenSSL release that supports Python 2.7).
+
+Changes:
+^^^^^^^^
+
+- CVE-2026-27448 (GHSA-vp96-hxj8-p424): an exception raised by the callback
+  given to ``Context.set_tlsext_servername_callback`` is now reported through
+  ``sys.excepthook`` and aborts the handshake with a fatal alert, instead of
+  being lost and letting the connection be accepted. Backported from
+  pyOpenSSL 26.0.0.
+
 21.0.0 (2020-09-28)
 -------------------
 
